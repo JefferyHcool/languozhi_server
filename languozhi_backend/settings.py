@@ -15,7 +15,6 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.1/howto/deployment/checklist/
 
@@ -27,18 +26,34 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
+    "encryption.apps.EncryptionConfig",
+    "languozhi_user.apps.LanguozhiUserConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    '蓝果汁AI.apps.蓝果汁AiConfig',
+    "rest_framework",
+    "rest_framework.authtoken",
+    'captcha',
 ]
+
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # 默认需要认证
+    ],
+}
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
@@ -71,17 +86,34 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "languozhi_backend.wsgi.application"
 
+# 配置 JWT
+from datetime import timedelta
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # 设置 access token 的有效时间
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # 设置 refresh token 的有效时间
+    'ROTATE_REFRESH_TOKENS': False,  # 如果设置为 True, 需要定期刷新 refresh token
+    'BLACKLIST_AFTER_ROTATION': True,  # 如果设置为 True，旧的 refresh token 会被加入黑名单
+}
+
+CAPTCHA_IMAGE_GENERATOR = 'utils.captcha_style.CustomCaptchaGenerator'
+
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'languozhi_db',  # 数据库名称
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': 'Hjw20020315',  # 数据库密码
+        'HOST': 'localhost',  # 数据库主机
+        'PORT': '3306',  # 数据库端口
     }
 }
 
+AUTH_USER_MODEL = 'languozhi_user.LGZUser'
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators
@@ -101,7 +133,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
@@ -112,7 +143,6 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
