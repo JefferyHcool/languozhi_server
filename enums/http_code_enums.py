@@ -20,6 +20,18 @@ class ResponseCode(Enum):
     PERMISSION_DENIED = 3001  # 权限不足
     SERVER_ERROR = 5000  # 服务器内部错误
 
+    #令牌相关状态码
+    TOKEN_INVALID = 4001
+    TOKEN_EXPIRED = 4002
+    TOKEN_EXPIRED_IN_MINUTES = 4003
+    TOKEN_EXPIRED_IN_HOURS = 4004
+    TOKEN_EXPIRED_IN_DAYS = 4005
+    TOKEN_EXPIRED_IN_WEEKS = 4006
+    TOKEN_EXPIRED_IN_MONTHS = 4007
+    TOKEN_EXPIRED_IN_YEARS = 4008
+    TOKEN_EXPIRED_IN_DECADES = 4009
+    TOKEN_EXPIRED_IN_CENTURIES = 4010
+    AUTHENTICATION_FAILED = 4010
     def describe(self):
         """
         返回状态码的描述信息。
@@ -36,5 +48,12 @@ class ResponseCode(Enum):
             self.USER_ALREADY_EXISTS: "用户已存在",
             self.PERMISSION_DENIED: "权限不足",
             self.SERVER_ERROR: "服务器内部错误",
+            self.TOKEN_INVALID: "令牌无效",
+            self.TOKEN_EXPIRED: "令牌过期",
+            self.TOKEN_EXPIRED_IN_MINUTES: "令牌过期",
+            self.TOKEN_EXPIRED_IN_HOURS: "令牌过期",
+            self.TOKEN_EXPIRED_IN_DAYS: "令牌过期",
+            self.TOKEN_EXPIRED_IN_WEEKS: "令牌过期",
+            self.AUTHENTICATION_FAILED: "认证失败",
         }
         return descriptions.get(self, "未知错误")

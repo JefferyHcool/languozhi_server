@@ -1,3 +1,4 @@
+from rest_framework import status
 from rest_framework.response import Response
 from enums.http_code_enums import ResponseCode
 
@@ -43,3 +44,22 @@ class ApiResponse:
             "msg": msg,
             "data": data,
         })
+
+    @staticmethod
+    def no_auth_response(msg=None, code=ResponseCode.ERROR, data=None):
+        """
+        未登录响应
+        """
+        if isinstance(code, ResponseCode):
+            code_value = code.value
+            msg = msg or code.describe()
+        else:
+            code_value = code
+            msg = msg or "操作失败"
+
+        return Response({
+            "code":code.value,
+            "msg": code.describe(),
+            "data": None,
+
+        },status=status.HTTP_401_UNAUTHORIZED)

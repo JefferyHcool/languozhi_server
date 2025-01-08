@@ -11,7 +11,9 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
+import os
+from dotenv import load_dotenv
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -46,6 +48,7 @@ INSTALLED_APPS = [
 
 
 REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'utils.exceptions.custom_exception_handler',  # 使用自定义异常处理器
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.SessionAuthentication',
@@ -92,7 +95,7 @@ WSGI_APPLICATION = "languozhi_backend.wsgi.application"
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=30),  # 设置 access token 的有效时间
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),  # 设置 access token 的有效时间
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # 设置 refresh token 的有效时间
     'ROTATE_REFRESH_TOKENS': False,  # 如果设置为 True, 需要定期刷新 refresh token
     'BLACKLIST_AFTER_ROTATION': True,  # 如果设置为 True，旧的 refresh token 会被加入黑名单
@@ -179,3 +182,19 @@ CORS_ALLOW_HEADERS = [
     "X-CSRFToken",
     "X-Requested-With",
 ]
+
+ALIYUN_SMS_ACCESS_KEY = os.getenv("ALIYUN_SMS_ACCESS_KEY")
+ALIYUN_SMS_ACCESS_SECRET = os.getenv("ALIYUN_SMS_ACCESS_SECRET")
+ALIYUN_SMS_SIGN_NAME = os.getenv("ALIYUN_SMS_SIGN_NAME")
+ALIYUN_SMS_TEMPLATE_CODE = os.getenv("ALIYUN_SMS_TEMPLATE_CODE")
+
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379/1',  # Redis 地址
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+        }
+    }
+}

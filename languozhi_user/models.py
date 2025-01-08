@@ -7,12 +7,14 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager, PermissionsMixin
 
 class LGZUserManager(BaseUserManager):
-    def create_user(self, username,phone_number, password=None, **extra_fields):
+    def create_user(self, username, phone_number, password=None, **extra_fields):
         if not username:
             raise ValueError("The Username field is required")
         if not phone_number:
             raise ValueError("The Phone Number field is required")
-        user = self.model(username=username, **extra_fields)
+
+        # 使用 phone_number 来初始化 user
+        user = self.model(username=username, phone_number=phone_number, **extra_fields)
         user.set_password(password)
         user.save(using=self._db)
         return user

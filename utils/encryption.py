@@ -121,6 +121,3 @@ def encrypt_data(data, public_key_path="public_key.pem"):
         raise ValueError(f"加密失败: {e}")
 
 
-password= encrypt_data("xjgr")
-print(password)
-print(decrypt_data(password))
