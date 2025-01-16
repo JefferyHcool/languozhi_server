@@ -1,6 +1,7 @@
 import base64
 from io import BytesIO
 
+from django.http import HttpResponse
 from django.shortcuts import render
 from rest_framework.permissions import AllowAny
 
@@ -19,7 +20,9 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from enums.http_code_enums import ResponseCode
 from languozhi_user.serializers import UserSerializer
 from languozhi_user.services.userServices import UserService
+from languozhi_user.services.wechatServices import get_qrcode_url
 from utils import get_client_ip
+from utils.WechatService import WechatService
 from utils.aliyun_sms import AliyunSMS
 from utils.captcha_style import CaptchaService
 from utils.encryption import load_private_key, decrypt_data
@@ -81,7 +84,7 @@ class SendSMSCode(APIView):
             return ApiResponse.error(msg=e.__str__(), code=ResponseCode.ERROR)
         res = user_service.send_msg(phone_number)
         if res:
-            return ApiResponse.success(data=True,msg='短信发送成功', code=ResponseCode.SUCCESS)
+            return ApiResponse.success(data=True, msg='短信发送成功', code=ResponseCode.SUCCESS)
         return ApiResponse.error(msg='短信发送失败', code=ResponseCode.ERROR)
 
 
@@ -162,6 +165,21 @@ class LoginOrRegisterAPIView(APIView):
             return Response({'msg': '登录失败账号或密码错误', 'data': None, 'code': 200})
         except Exception as e:
             return ApiResponse.error(msg=e.__str__(), code=ResponseCode.ERROR)
+
+
+class WechatLoginQrCodeAPIView(APIView):
+    permission_classes = [AllowAny]
+
+    def get(self, request, *args, **kwargs):
+        print('get')
+        image_data,expire_seconds = get_qrcode_url()
+        if not image_data:
+            return ApiResponse.error(msg='获取二维码失败',code=ResponseCode.ERROR)
+        return ApiResponse.success(data={
+            'image_data': image_data,
+            'expire_seconds': expire_seconds
+        }, msg='获取二维码成功', code=ResponseCode.SUCCESS)
+
 
 class CustomTokenRefreshView(TokenRefreshView):
     """

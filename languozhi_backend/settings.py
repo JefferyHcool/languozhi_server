@@ -26,13 +26,19 @@ SECRET_KEY = "django-insecure-lji!64tj)z(ycd8td_4h4=-&(_0y++msap*+md#&x@4d$7^c-t
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',  # 本地开发
+    'localhost',  # 本地开发
+    '52634dd2.r10.cpolar.top',  # 添加 cpolar 提供的域名
+]
+
 
 # Application definition
 
 INSTALLED_APPS = [
     "encryption.apps.EncryptionConfig",
     "languozhi_user.apps.LanguozhiUserConfig",
+    "wechat.apps.WechatConfig",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -182,6 +188,7 @@ CORS_ALLOW_HEADERS = [
     "X-CSRFToken",
     "X-Requested-With",
 ]
+
 
 ALIYUN_SMS_ACCESS_KEY = os.getenv("ALIYUN_SMS_ACCESS_KEY")
 ALIYUN_SMS_ACCESS_SECRET = os.getenv("ALIYUN_SMS_ACCESS_SECRET")

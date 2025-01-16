@@ -32,4 +32,5 @@ urlpatterns = [
     path('api/users/', include('languozhi_user.urls')),  # 将用户相关的路由包含进来
     path('captcha/', include('captcha.urls')),  # 添加这一行
     path('api/encryption/', include('encryption.urls')),
+    path('api/', include('wechat.urls'))
 ]
