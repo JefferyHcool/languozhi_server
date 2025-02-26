@@ -1,3 +1,5 @@
+from django.utils import timezone
+
 from languozhi_user.serializers import UserSerializer
 import datetime
 
@@ -25,7 +27,7 @@ class UserService:
         if phone_number:
             user = self.user_model.objects.filter(phone_number=phone_number).first()
             if user:
-                user.last_login = datetime.datetime.now()
+                user.last_login =timezone.now()
                 user.last_login_ip = payload['last_login_ip']
                 user.login_count += 1
                 user.save()

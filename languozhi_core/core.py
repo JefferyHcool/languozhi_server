@@ -19,7 +19,6 @@ class QuestionArgs(TypedDict):
     difficulty: str
     count: str
     questions_per_item: str
-    topic: Optional[str]
     extra: Optional[str]
     materials: Dict[str, str]
 
@@ -47,21 +46,29 @@ class LanguozhiCore:
                 api_key=os.getenv(f'{LLM.value}_API_KEY'),
                 base_url=os.getenv(f'{LLM.value}_BASE_URL'),
                 model=f'{model_name.value}',
-                temperature=1.3,
+                temperature=0.2,
             )
         else:
             raise ValueError(f"不支持的 LLM: {LLM}")
 
     def parsing_args(self, args: QuestionArgs) -> None:
+
         """解析参数并存储到实例变量中"""
-        self.args = {
-            'classification': args.get('classification'),
-            'difficulty': args.get('difficulty'),
-            'count': args.get('count'),
-            'questions_per_item': args.get('questions_per_item'),
-            'topic': args.get('topic'),
-            'extra': args.get('extra'),
-        }
+        try:
+            #dict 转为 QuestionArgs
+            args = QuestionArgs(**args)
+            self.args = {
+                'classification': args.get('classification'),
+                'difficulty': args.get('difficulty'),
+                'count': args.get('count'),
+                'questions_per_item': args.get('questions_per_item'),
+                'topic': args.get('topic'),
+                'extra': args.get('extra'),
+            }
+
+        except Exception as e:
+            logger.error(f"解析参数时发生错误: {e}")
+            raise
 
     def generate_executor(self) -> Any:
         """动态生成执行器"""
@@ -95,12 +102,19 @@ class LanguozhiCore:
 
 if __name__ == '__main__':
     core = LanguozhiCore(LLMEnum.DEEPSEEK, ModelType.DEEP_CHAT)
-    question = core.send_requirement(args={
-        "classification": "听力", 'difficulty': 'CET4', "count": "1",
-        "questions_per_item": "3", 'topic': '春节要不要看春晚',
+    # TODO 添加资料文件解析
+
+
+
+
+    question = core.send_requirement(args=
+    {
+        "classification": "听力", 'difficulty': '小学三年级', "count": "2",
+        "questions_per_item": "3",'extra':'',
         'materials': {
-            '_format': '对话', 'scene': '', 'participants': '3', 'level': '小学', 'length': '',
-            'topic': '关于漫威超级英雄的讨论',
+            '_format': '对话', 'scene': '', 'participants': '3', 'level': '小学三年级', 'length': '不低于10轮对话',
+            'topic': '',
             'details': ''''''
         }
-    })
+    }
+    )

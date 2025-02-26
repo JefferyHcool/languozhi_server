@@ -4,38 +4,32 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="cdda4682-4f14-4a74-a6cb-d4cef50ab62c" name="Changes" comment="fix:修复bugs">
-      <change afterPath="$PROJECT_DIR$/assets/logo.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/agents.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/agents/ListeningQuestion.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/agents/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/core.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/function_call/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/function_call/functions.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/prompts.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_core/structure.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/languozhi_user/services/wechatServices.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/WechatService.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/cos.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utils/voice_generator.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/__init__.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/admin.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/apps.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/models.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/tests.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/urls.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/wechat/views.py" afterDir="false" />
+    <list default="true" id="cdda4682-4f14-4a74-a6cb-d4cef50ab62c" name="Changes" comment="feat:初步完成听力生成功能">
+      <change afterPath="$PROJECT_DIR$/celeryconfig.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/languozhi_backend/celery.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/languozhi_question/services/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/languozhi_question/services/question_service.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/languozhi_question/tasks.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/languozhi_question/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/languozhi_backend/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_backend/__init__.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/languozhi_backend/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_backend/settings.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/languozhi_backend/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_backend/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/languozhi_user/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_user/urls.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/languozhi_user/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_user/views.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/languozhi_core/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_core/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/languozhi_core/agents/ListeningQuestion.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_core/agents/ListeningQuestion.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/languozhi_core/core.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_core/core.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/languozhi_user/services/userServices.py" beforeDir="false" afterPath="$PROJECT_DIR$/languozhi_user/services/userServices.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/cos.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/cos.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/exceptions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/exceptions.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/voice_generator.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/voice_generator.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="DjangoConsoleOptions" custom-start-script="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)">
+    <option name="myCustomStartScript" value="import sys; print('Python %s on %s' % (sys.version, sys.platform))&#10;import django; print('Django %s' % django.get_version())&#10;sys.path.extend([WORKING_DIR_AND_PYTHON_PATHS])&#10;if 'setup' in dir(django): django.setup()&#10;import django_manage_shell; django_manage_shell.run(PROJECT_ROOT)" />
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -83,6 +77,28 @@
     </key>
   </component>
   <component name="RunManager" selected="Python.core">
+    <configuration name="ListeningQuestion" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="languozhi_backend" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/languozhi_core/agents" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/languozhi_core/agents/ListeningQuestion.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="agents (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="languozhi_backend" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -97,28 +113,6 @@
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
       <option name="SCRIPT_NAME" value="$PROJECT_DIR$/languozhi_core/agents.py" />
-      <option name="PARAMETERS" value="" />
-      <option name="SHOW_COMMAND_LINE" value="false" />
-      <option name="EMULATE_TERMINAL" value="false" />
-      <option name="MODULE_MODE" value="false" />
-      <option name="REDIRECT_INPUT" value="false" />
-      <option name="INPUT_FILE" value="" />
-      <method v="2" />
-    </configuration>
-    <configuration name="agents" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
-      <module name="languozhi_backend" />
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs>
-        <env name="PYTHONUNBUFFERED" value="1" />
-      </envs>
-      <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/languozhi_core/function_call" />
-      <option name="IS_MODULE_SDK" value="true" />
-      <option name="ADD_CONTENT_ROOTS" value="true" />
-      <option name="ADD_SOURCE_ROOTS" value="true" />
-      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="D:\data_backup_from_ssd\02_个人项目\05_蓝果汁\languozhi_server\languozhi_core\agents.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -219,10 +213,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.core" />
-        <item itemvalue="Python.cos" />
+        <item itemvalue="Python.ListeningQuestion" />
         <item itemvalue="Python.voice_generator" />
+        <item itemvalue="Python.cos" />
         <item itemvalue="Python.agents (1)" />
-        <item itemvalue="Python.agents" />
       </list>
     </recent_temporary>
   </component>
@@ -253,6 +247,23 @@
       <workItem from="1736823684367" duration="10940000" />
       <workItem from="1736928512202" duration="3836000" />
       <workItem from="1736944728320" duration="19000000" />
+      <workItem from="1737034271637" duration="14452000" />
+      <workItem from="1737609105179" duration="5000" />
+      <workItem from="1738732926057" duration="3424000" />
+      <workItem from="1738911428154" duration="2403000" />
+      <workItem from="1738977111662" duration="18000" />
+      <workItem from="1739590956233" duration="3661000" />
+      <workItem from="1739672625806" duration="1135000" />
+      <workItem from="1739753461458" duration="1901000" />
+      <workItem from="1740057055208" duration="1568000" />
+      <workItem from="1740118897190" duration="9000" />
+      <workItem from="1740377440316" duration="6000" />
+      <workItem from="1740377553297" duration="590000" />
+      <workItem from="1740463917683" duration="6000" />
+      <workItem from="1740466069129" duration="4276000" />
+      <workItem from="1740531189361" duration="121000" />
+      <workItem from="1740547429909" duration="4153000" />
+      <workItem from="1740573601512" duration="4926000" />
     </task>
     <task id="LOCAL-00001" summary="feat:完成账号密码登录接口及图形验证码接口">
       <option name="closed" value="true" />
@@ -294,7 +305,15 @@
       <option name="project" value="LOCAL" />
       <updated>1736346370111</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat:初步完成听力生成功能">
+      <option name="closed" value="true" />
+      <created>1737034349445</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1737034349445</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -316,15 +335,21 @@
     <MESSAGE value="feat:加入跨域设置" />
     <MESSAGE value="feat:完成手机验证码登录接口" />
     <MESSAGE value="fix:修复bugs" />
-    <option name="LAST_COMMIT_MESSAGE" value="fix:修复bugs" />
+    <MESSAGE value="feat:初步完成听力生成功能" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat:初步完成听力生成功能" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
           <url>file://$PROJECT_DIR$/languozhi_core/agents/ListeningQuestion.py</url>
-          <line>180</line>
+          <line>209</line>
           <option name="timeStamp" value="7" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/languozhi_core/agents/ListeningQuestion.py</url>
+          <line>63</line>
+          <option name="timeStamp" value="8" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -332,11 +357,12 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/languozhi_server$encryption.coverage" NAME="encryption Coverage Results" MODIFIED="1736224157789" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/languozhi_server$agents__1_.coverage" NAME="agents (1) Coverage Results" MODIFIED="1736928517063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/languozhi_core" />
-    <SUITE FILE_PATH="coverage/languozhi_server$voice_generator.coverage" NAME="voice_generator Coverage Results" MODIFIED="1736952676929" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
-    <SUITE FILE_PATH="coverage/languozhi_server$core.coverage" NAME="core Coverage Results" MODIFIED="1736998046057" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/languozhi_core" />
+    <SUITE FILE_PATH="coverage/languozhi_server$voice_generator.coverage" NAME="voice_generator Coverage Results" MODIFIED="1737042721390" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/languozhi_server$core.coverage" NAME="core Coverage Results" MODIFIED="1740467709933" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/languozhi_core" />
     <SUITE FILE_PATH="coverage/languozhi_server$aliyun_sms.coverage" NAME="aliyun_sms Coverage Results" MODIFIED="1736219213909" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/languozhi_server$cos.coverage" NAME="cos Coverage Results" MODIFIED="1736994585343" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
     <SUITE FILE_PATH="coverage/languozhi_server$agents.coverage" NAME="agents Coverage Results" MODIFIED="1736580773692" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/languozhi_core/function_call" />
+    <SUITE FILE_PATH="coverage/languozhi_server$ListeningQuestion.coverage" NAME="ListeningQuestion Coverage Results" MODIFIED="1737042758612" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/languozhi_core/agents" />
     <SUITE FILE_PATH="coverage/languozhi_server$WechatService.coverage" NAME="WechatService Coverage Results" MODIFIED="1736410169050" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
   </component>
 </project>

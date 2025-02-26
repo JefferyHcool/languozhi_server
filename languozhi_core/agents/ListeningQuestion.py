@@ -12,18 +12,22 @@ from utils.voice_generator import VoiceGenerator
 
 
 class ListeningQuestionGenerator:
+
     def __init__(self, llm, base_prompt: str):
         self.llm = llm
         self.base_prompt = base_prompt
         self.materials_obj = {'str_content': '', 'raw_content': ''}
         self.generator = VoiceGenerator()
-        self.file_name=uuid.uuid4().__str__().replace('-', '')+'.mp3'
+        self.file_name = uuid.uuid4().__str__().replace('-', '') + '.mp3'
+        self.expect_count = 0
+        self.max_retry = 5
 
-    def count_validator(self, args: Dict[str, Any],count: int):
+    def count_validator(self, args: Dict[str, Any], count: int):
         if args.get('question_and_options'):
             if len(args.get('question_and_options')) < count:
                 return False
         return True
+
     def _generate_material_prompt(self, materials: Dict[str, Any]) -> ChatPromptTemplate:
         """生成听力素材的 prompt"""
         material_prompt = listening_material_prompts(
@@ -59,8 +63,19 @@ class ListeningQuestionGenerator:
 
     def _generate_question(self, prompt: ChatPromptTemplate) -> Any:
         """调用 LLM 生成听力题目"""
-        return self.llm.with_structured_output(BaseQuestion).invoke(prompt.to_messages())
 
+        while self.max_retry >= 0:
+            res = self.llm.with_structured_output(BaseQuestion).invoke(prompt.to_messages())
+            if self.count_validator(res.dict(), count=int(self.expect_count)):
+                return res
+            else:
+                if self.max_retry != 0:
+                    self.max_retry -= 1
+                    print('max_retry', self.max_retry)
+                else:
+                    raise ValueError('未按照要求生成对应题数')
+
+        raise ValueError('未按照要求生成对应题数')
     def _generate_translation(self, prompt: ChatPromptTemplate) -> Any:
         """调用 LLM 生成翻译"""
         return self.llm.with_structured_output(Translation).invoke(prompt.to_messages())
@@ -119,7 +134,7 @@ class ListeningQuestionGenerator:
             speaker = item['speaker']['name']
             content = item['content']
             print(f"{speaker}: {content}")
-        print()
+
 
     def _combine_material_and_args(self, material_result: Any, args: Dict[str, Any]) -> Dict[str, Any]:
         """合并生成的听力素材和原始参数"""
@@ -149,34 +164,48 @@ class ListeningQuestionGenerator:
         speaker_model = []
         for i in speaker_list.keys():
             if speaker_list[i] == 'female':
-                model=self.generator.filter_by_gender('f')
+                model = self.generator.filter_by_gender('f')
             else:
-                model=self.generator.filter_by_gender('m')
+                model = self.generator.filter_by_gender('m')
             speaker_model.append({
-                'speaker':i,
-                'model':model['name']
+                'speaker': i,
+                'model': model['name']
             })
+        print('speaker_model', speaker_model)
+        ssml = '<speak version="1.0" xmlns="https://www.w3.org/2001/10/synthesis" xml:lang="en-US">'
         for m in args.get('material'):
             speaker = m['speaker']['name']
             content = m['content']
-            voice_model=''
+            voice_model = ''
             for i in speaker_model:
                 if speaker == i['speaker']:
-                    voice_model=i['model']
-            path= self.generator.generate_voice(text=content,voice_model=voice_model,file_name=self.file_name)
-            self.upload_material(path=path)
+                    voice_model = i['model']
+            print(voice_model)
+            text = self.generator.generate_ssml(speaker_model=voice_model, content=content)
+            ssml +=text
+        ssml+='</speak>'
+        path = self.generator.generate_voice(text=ssml, voice_model=voice_model, file_name=self.file_name,ssml=True)
 
+        args['material_url']= self.upload_material(path=path)
+        return args
 
-    def upload_material(self, path:str)->None:
+    def upload_material(self, path: str) -> str:
         uploader = TencentCOSUploader()
 
-        # 上传文件，不使用断点续传
         response = uploader.upload_file(
             key=self.file_name,
             local_file_path=path,
             enable_md5=True,
             progress_callback=None
         )
+
+        if not response.get('Location'):
+            raise ValueError("Upload failed: 'Location' field not found in response.")
+
+        # 生成 1 小时有效的访问 URL
+        signed_url = uploader.generate_presigned_url(self.file_name, expires_in=3600)
+
+        return signed_url
 
     def start(self, args: Dict[str, Any]) -> Dict:
         """生成听力题目"""
@@ -215,6 +244,7 @@ class ListeningQuestionGenerator:
                 "topic": materials.get('topic', None),
             }
         })
+        self.expect_count = args.get('questions_per_item')
 
         # 合并素材和参数，生成题目
         combined_args = self._combine_material_and_args(materials_res, args)
@@ -233,5 +263,5 @@ class ListeningQuestionGenerator:
 
         # 打印生成的听力题目
         self._print(final_res)
-        self.voice_material(final_res)
+        final_res= self.voice_material(final_res)
         return final_res

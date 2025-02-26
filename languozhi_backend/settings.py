@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
+
 load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -32,12 +33,12 @@ ALLOWED_HOSTS = [
     '52634dd2.r10.cpolar.top',  # 添加 cpolar 提供的域名
 ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
     "encryption.apps.EncryptionConfig",
     "languozhi_user.apps.LanguozhiUserConfig",
+    "languozhi_question.apps.LanguozhiQuestionConfig",
     "wechat.apps.WechatConfig",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -50,8 +51,6 @@ INSTALLED_APPS = [
     'captcha',
     'corsheaders'
 ]
-
-
 
 REST_FRAMEWORK = {
     'EXCEPTION_HANDLER': 'utils.exceptions.custom_exception_handler',  # 使用自定义异常处理器
@@ -101,14 +100,13 @@ WSGI_APPLICATION = "languozhi_backend.wsgi.application"
 from datetime import timedelta
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=1),  # 设置 access token 的有效时间
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=800),  # 设置 access token 的有效时间
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),  # 设置 refresh token 的有效时间
     'ROTATE_REFRESH_TOKENS': False,  # 如果设置为 True, 需要定期刷新 refresh token
     'BLACKLIST_AFTER_ROTATION': True,  # 如果设置为 True，旧的 refresh token 会被加入黑名单
 }
 
 CAPTCHA_IMAGE_GENERATOR = 'utils.captcha_style.CustomCaptchaGenerator'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -165,7 +163,6 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",  # 允许来自前端的请求（本地开发环境）
     "https://your-frontend-domain.com",  # 部署后的前端域名
@@ -189,12 +186,10 @@ CORS_ALLOW_HEADERS = [
     "X-Requested-With",
 ]
 
-
 ALIYUN_SMS_ACCESS_KEY = os.getenv("ALIYUN_SMS_ACCESS_KEY")
 ALIYUN_SMS_ACCESS_SECRET = os.getenv("ALIYUN_SMS_ACCESS_SECRET")
 ALIYUN_SMS_SIGN_NAME = os.getenv("ALIYUN_SMS_SIGN_NAME")
 ALIYUN_SMS_TEMPLATE_CODE = os.getenv("ALIYUN_SMS_TEMPLATE_CODE")
-
 
 CACHES = {
     'default': {
@@ -205,3 +200,14 @@ CACHES = {
         }
     }
 }
+
+CELERY_BROKER_URL = 'redis://127.0.0.1:6379/1'  # Redis 作为消息队列
+CELERY_RESULT_BACKEND = 'redis://127.0.0.1:6379/1'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+# 将时区设置为亚洲/上海时区。
+CELERY_TIMEZONE = 'Asia/Shanghai'
+
+# 启用 UTC 时间。
+CELERY_ENABLE_UTC = True

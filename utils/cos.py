@@ -1,4 +1,6 @@
 # -*- coding=utf-8
+import datetime
+
 from qcloud_cos import CosConfig, CosS3Client
 from qcloud_cos.cos_exception import CosClientError, CosServiceError
 import sys
@@ -34,6 +36,25 @@ class TencentCOSUploader:
 
     def remove_local_file(self,local_file_path):
         os.remove(local_file_path)
+
+    import datetime
+    from qcloud_cos import CosConfig, CosS3Client
+
+    def generate_presigned_url(self,file_key: str, expires_in: int = 3600) -> str:
+        """
+        生成腾讯云 COS 临时访问 URL，有效期 expires_in 秒
+        """
+        cos_client =self.client
+
+        signed_url = cos_client.get_presigned_url(
+            Method='GET',
+            Bucket=self.bucket,
+            Key=file_key,
+            Expired=int(datetime.datetime.now().timestamp()) + expires_in  # 过期时间
+        )
+
+        return signed_url
+
     def upload_file(self, key, local_file_path, enable_md5=False, progress_callback=None):
         """
         使用高级接口上传文件，不重试，不使用断点续传功能。

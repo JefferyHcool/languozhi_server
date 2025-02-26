@@ -26,4 +26,4 @@ class ModelType(enum.Enum):
     GPT_4 = "gpt-4"
     GPT_4_32K = "gpt-4-32k"
     GPT_4_TURBO = "gpt-4-turbo"
-    DEEP_CHAT = 'deepseek-chat'
+    DEEP_CHAT = 'deepseek-ai/DeepSeek-V2.5'
